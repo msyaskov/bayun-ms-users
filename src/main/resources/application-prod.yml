@@ -1,0 +1,29 @@
+server:
+  port: 8080
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka
+spring:
+  application:
+    name: 'ms-users'
+  datasource:
+    url: jdbc:postgresql://${spring.datasource.host}:${spring.datasource.port}/${spring.datasource.database}
+    database: ms_users_db
+    host: 192.168.0.3
+    port: 5442
+    username: user
+    password: pass
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  security.oauth2.resourceserver.jwt.jwk-set-uri: http://id:8080/oauth2/jwks
+logging:
+  level:
+    root: INFO
+ms.users:
+  details:
+    developer:
+      password: password
+      authorities: users.write
+      enabled: true
