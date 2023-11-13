@@ -6,22 +6,22 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * @author Максим Яськов
  */
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class UserNotFoundException extends RuntimeException {
+@ResponseStatus(HttpStatus.CONFLICT)
+public class NicknameOccupiedException extends RuntimeException {
 
-    public UserNotFoundException() {
+    public NicknameOccupiedException() {
         super();
     }
 
-    public UserNotFoundException(String message) {
+    public NicknameOccupiedException(String message) {
         super(message);
     }
 
-    public UserNotFoundException(String message, Throwable cause) {
+    public NicknameOccupiedException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public UserNotFoundException(Throwable cause) {
+    public NicknameOccupiedException(Throwable cause) {
         super(cause);
     }
 }

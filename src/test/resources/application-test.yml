@@ -1,0 +1,2 @@
+spring:
+  security.oauth2.resourceserver.jwt.jwk-set-uri: http://id.bayun.localhost/oauth2/jwks

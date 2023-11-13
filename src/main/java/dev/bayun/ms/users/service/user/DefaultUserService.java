@@ -26,6 +26,10 @@ public class DefaultUserService implements UserService {
     public User createFromCandidate(User candidate) {
         Assert.notNull(candidate, "A candidate must not be null");
 
+        if (userRepository.existsByNickname(candidate.getNickname())) {
+            throw new NicknameOccupiedException();
+        }
+
         User user = User.builder()
                 .id(this.userIdGenerator.generateUserId())
                 .email(candidate.getEmail())
@@ -53,13 +57,42 @@ public class DefaultUserService implements UserService {
         this.userRepository.deleteById(userId);
     }
 
-    public void update(User updated) {
-        Assert.notNull(updated, "An user must not be null");
-        if (!this.userRepository.existsById(updated.getId())) {
-            throw this.userNotFoundByIdException(updated.getId());
+    public void patchById(UUID userId, User patch) {
+        Assert.notNull(patch, "A patch must not be null");
+
+        User user = this.findById(userId);
+
+        if (patch.getNickname() != null) {
+            if (this.userRepository.existsByNickname(patch.getNickname())) {
+                throw new NicknameOccupiedException();
+            } else {
+                user.setEmail(patch.getEmail());
+            }
         }
 
-        this.userRepository.save(updated);
+        if (patch.getGivenName() != null) {
+            user.setGivenName(patch.getGivenName());
+        }
+
+        if (patch.getFamilyName() != null) {
+            user.setFamilyName(patch.getFamilyName());
+        }
+
+        if (patch.getPicture() != null) {
+            user.setPicture(patch.getPicture());
+        }
+
+        if (patch.getEmail() != null) {
+            user.setEmail(patch.getEmail());
+        }
+
+        this.userRepository.save(patch);
+    }
+
+    @Override
+    public boolean existsByNickname(String nickname) {
+        Assert.notNull(nickname, "A nickname must not be null");
+        return userRepository.existsByNickname(nickname);
     }
 
     private RuntimeException userNotFoundByIdException(UUID userId) {

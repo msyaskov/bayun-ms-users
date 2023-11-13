@@ -1,5 +1,7 @@
 package dev.bayun.ms.users.rest;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import dev.bayun.starter.restobject.RestObject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +14,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StringId {
+@JsonTypeName("id")
+public class StringId implements RestObject {
 
     private String id;
 

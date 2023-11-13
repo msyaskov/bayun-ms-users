@@ -1,7 +1,6 @@
 package dev.bayun.ms.users.service.user;
 
 import dev.bayun.ms.users.entity.User;
-import org.springframework.util.Assert;
 
 import java.util.UUID;
 
@@ -18,6 +17,7 @@ public interface UserService {
 
     void deleteById(UUID userId);
 
-    void update(User updated);
+    void patchById(UUID userId, User updated);
 
+    boolean existsByNickname(String nickname);
 }
